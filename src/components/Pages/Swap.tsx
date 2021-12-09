@@ -29,11 +29,11 @@ const Swap = () => {
     <Flex direction="column">
       <Heading> Swap </Heading>
       <HStack>
-        <Avatar h="100%" boxSize="15px" src={rgt.logoURL} />
+        <Avatar h="100%" boxSize="15px" src={rgt?.logoURL} />
         <Text>RGT Balance: {formatEther(rgtBalance ?? BigNumber.from(0))}</Text>
       </HStack>
       <HStack>
-        <Avatar h="100%" boxSize="15px" src={tribe.logoURL} />
+        <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
 
         <Text>
           TRIBE Balance: {formatEther(tribeBalance ?? BigNumber.from(0))}
