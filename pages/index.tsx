@@ -1,10 +1,11 @@
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import Link from "next/link";
-import Account from "../components/Account";
-import ETHBalance from "../components/ETHBalance";
-import TokenBalance from "../components/TokenBalance";
-import useEagerConnect from "../hooks/useEagerConnect";
+import Account from "components/Connected/Account";
+import ETHBalance from "components/Connected/ETHBalance";
+import TokenBalance from "components/Connected/TokenBalance";
+import useEagerConnect from "hooks/useEagerConnect";
+import { Box } from "@chakra-ui/layout";
 
 const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
 
@@ -22,17 +23,7 @@ function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header>
-        <nav>
-          <Link href="/">
-            <a>next-web3-boilerplate</a>
-          </Link>
-
-          <Account triedToEagerConnect={triedToEagerConnect} />
-        </nav>
-      </header>
-
-      <main>
+      <Box w="100%" h="100%" flexGrow={1}>
         <h1>
           Welcome to{" "}
           <a href="https://github.com/mirshko/next-web3-boilerplate">
@@ -47,7 +38,7 @@ function Home() {
             <TokenBalance tokenAddress={DAI_TOKEN_ADDRESS} symbol="DAI" />
           </section>
         )}
-      </main>
+      </Box>
 
       <style jsx>{`
         nav {
@@ -57,6 +48,8 @@ function Home() {
 
         main {
           text-align: center;
+          margin-left: auto;
+          margin-right: auto;
         }
       `}</style>
     </div>
