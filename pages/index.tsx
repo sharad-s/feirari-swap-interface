@@ -19,7 +19,7 @@ function Home() {
   return (
     <div>
       <Head>
-        <title>next-web3-boilerplate</title>
+        <title>FeiRari </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
