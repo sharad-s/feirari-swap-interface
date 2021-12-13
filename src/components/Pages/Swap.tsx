@@ -72,21 +72,23 @@ const Swap = () => {
           border="1px solid grey"
           borderRadius="lg"
           px={10}
-          py={10}
+          py={5}
           my="auto"
           mx="auto"
         >
           <Heading> Swap RGT for TRIBE </Heading>
 
-          <VStack align="start" bg="" my={4} mb={8}>
-            <Text>You have:</Text>
-            <HStack>
-              <Avatar h="100%" boxSize="15px" src={rgt?.logoURL} />
-              <Text fontWeight="bold">
-                {formatEther(rgtBalance ?? BigNumber.from(0))} RGT
-              </Text>
-            </HStack>
-          </VStack>
+          <HStack w="100%" align="start" justify="start" my={4}>
+            <VStack align="start" bg="" my={4} mb={8}>
+              <Text>You have:</Text>
+              <HStack>
+                <Avatar h="100%" boxSize="15px" src={rgt?.logoURL} />
+                <Text fontWeight="bold">
+                  {formatEther(rgtBalance ?? BigNumber.from(0))} RGT
+                </Text>
+              </HStack>
+            </VStack>
+          </HStack>
 
           <VStack align="flex-start" w="100%" mb={4}>
             <InputGroup w="100%">
@@ -105,7 +107,7 @@ const Swap = () => {
               />
               <InputRightElement
                 children={
-                  <HStack>
+                  <HStack w="100%" mr={"150px"} justify="start" align="center">
                     <HStack>
                       <Avatar h="100%" boxSize="15px" src={rgt?.logoURL} />
                       <Text>RGT</Text>
@@ -119,6 +121,9 @@ const Swap = () => {
                       }
                       background="black"
                       color="white"
+                      margin={0}
+                      h="30%"
+                      p={1}
                     >
                       Max
                     </Button>
@@ -143,25 +148,17 @@ const Swap = () => {
               />
               <InputRightElement
                 children={
-                  <HStack>
-                    <HStack>
-                      <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
-                      <Text>TRIBE</Text>
-                    </HStack>
+                  <HStack w="100%" mr={"150px"} justify="start" align="center">
+                    <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
+                    <Text>TRIBE</Text>
                   </HStack>
                 }
               />
             </InputGroup>
-            {/* <HStack align="center">
-          <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
-          <Text>
-            TRIBE Balance: {formatEther(tribeBalance ?? BigNumber.from(0))}
-          </Text>
-        </HStack> */}
           </VStack>
 
           <Button onClick={handleSwap} w="100%" colorScheme="green">
-            Swap
+            Swap RGT for TRIBE
           </Button>
         </Flex>
       </VStack>
@@ -173,6 +170,7 @@ const Swap = () => {
           h="70%"
           mx="auto"
           my="auto"
+          alt="Happy Pepe"
         />
       </VStack>
     </Flex>

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import RageQuite from "components/Pages/RageQuit";
-export default () => {
+const RagePage = () => {
   return (
     <>
       <Head>
@@ -11,3 +11,5 @@ export default () => {
     </>
   );
 };
+
+export default RagePage;

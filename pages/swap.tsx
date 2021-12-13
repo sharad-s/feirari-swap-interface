@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Swap from "components/Pages/Swap";
-export default () => {
+
+const SwapPage = () => {
   return (
     <>
       <Head>
@@ -12,4 +13,4 @@ export default () => {
   );
 };
 
-
+export default SwapPage;

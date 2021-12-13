@@ -61,12 +61,12 @@ export const NewHeader = () => {
           <Spacer />
 
           <AppLink href="/swap">
-            <Text fontWeight="bold  ">Swap</Text>
+            <Text fontWeight="bold">Swap</Text>
           </AppLink>
           <Spacer />
 
           <AppLink href="/ngmi">
-            <Text fontWeight="bold  ">RageQuit</Text>
+            <Text fontWeight="bold">RageQuit</Text>
           </AppLink>
         </HStack>
         <Spacer />
