@@ -13,6 +13,7 @@ import { useWeb3React } from "@web3-react/core";
 // Data
 import RageQuitData from "utils/ragequit_data.json";
 
+// Exchange rate
 export const useRageQuitExchangeRate = () => {
   const rageQuitContract: RageQuit = useContract(
     RAGEQUIT_ADDRESS,
@@ -42,6 +43,7 @@ export const useRageQuitExchangeRate = () => {
   return result;
 };
 
+// Calculates RageQuit Amounts for user
 export const useRageQuitAmount = () => {
   const { account } = useWeb3React();
 
@@ -50,7 +52,7 @@ export const useRageQuitAmount = () => {
     RAGEQUIT_ABI
   );
 
-  const maxRageQuittableAmount = useMemo(() => {
+  const maxRageQuittableAmount: BigNumber = useMemo(() => {
     const maxAmount = RageQuitData[account];
     if (!maxAmount) {
       return BigNumber.from(0);
@@ -59,23 +61,23 @@ export const useRageQuitAmount = () => {
     }
   }, [account]);
 
-  const canRageQuit = useMemo(
+  const canRageQuit: boolean = useMemo(
     () => !maxRageQuittableAmount.isZero(),
     [maxRageQuittableAmount]
   );
 
-  //   const { data, mutate } = useSWR(
-  //     "currentRageQuittableAmount for " +
-  //       account +
-  //       " with maxRageQuit " +
-  //       maxRageQuittableAmount.toString(),
-  //     async () => {
-  //       const x = await rageQuitContract.callStatic;
-  //       return exchangeRate;
-  //     }
-  //   );
+  const { data: currentRageQuittableAmount, mutate } = useSWR(
+    "currentRageQuittableAmount for " +
+      account +
+      " with maxRageQuit " +
+      maxRageQuittableAmount.toString(),
+    async () => {
+      const claimedAmount = await rageQuitContract.callStatic.claimed(account);
+      return maxRageQuittableAmount.sub(claimedAmount);
+    }
+  );
 
-  //   useKeepSWRDataLiveAsBlocksArrive(mutate);
+  useKeepSWRDataLiveAsBlocksArrive(mutate);
 
-  return { maxRageQuittableAmount, canRageQuit };
+  return { maxRageQuittableAmount, canRageQuit, currentRageQuittableAmount };
 };

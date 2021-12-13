@@ -34,7 +34,8 @@ const Swap = () => {
   );
 
   const exchangeRate = useRageQuitExchangeRate();
-  const { maxRageQuittableAmount, canRageQuit } = useRageQuitAmount();
+  const { maxRageQuittableAmount, canRageQuit, currentRageQuittableAmount } =
+    useRageQuitAmount();
   console.log({ exchangeRate, maxRageQuittableAmount, canRageQuit });
 
   const fei = useTokenData(TOKEN_ADDRESSES.FEI);
@@ -103,7 +104,7 @@ const Swap = () => {
               <HStack>
                 <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
                 <Text fontWeight="bold">
-                  {formatEther(maxRageQuittableAmount ?? BigNumber.from(0))}{" "}
+                  {formatEther(currentRageQuittableAmount ?? BigNumber.from(0))}{" "}
                   TRIBE
                 </Text>
               </HStack>
