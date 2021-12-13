@@ -34,6 +34,7 @@ const Swap = () => {
   const [rgtInput, setRgtInput] = useState("");
 
   const exchangeRate = usePegExchangeRate();
+  console.log({ exchangeRate });
 
   const tribeReceived = useMemo(() => {
     if (!rgtInput || !exchangeRate) return "0";
@@ -48,9 +49,22 @@ const Swap = () => {
   };
 
   return (
-    <Flex direction="row" w="100%" h="100%" flexGrow={1} color="white">
+    <Flex
+      direction={{ base: "column", md: "row" }}
+      w="100%"
+      h="100%"
+      flexGrow={1}
+      color="white"
+    >
       {/* Left side */}
-      <VStack flexGrow={0} h="100%" w="50%" spacing="4" align="start" px={10}>
+      <VStack
+        flexGrow={0}
+        h="100%"
+        w={{ base: "100%", md: "50%" }}
+        spacing="4"
+        align="start"
+        px={10}
+      >
         {/* Box */}
         <Flex
           direction="column"
@@ -153,12 +167,6 @@ const Swap = () => {
                 }
               />
             </InputGroup>
-            {/* <HStack align="center">
-          <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
-          <Text>
-            TRIBE Balance: {formatEther(tribeBalance ?? BigNumber.from(0))}
-          </Text>
-        </HStack> */}
           </VStack>
 
           <Button onClick={handleSwap} w="100%" colorScheme="green">
@@ -167,7 +175,13 @@ const Swap = () => {
         </Flex>
       </VStack>
       {/* Right Side */}
-      <VStack w="50%" h="100%" flexGrow={0} flexShrink={0} bg="">
+      <VStack
+        w={{ base: "100%", md: "50%" }}
+        h="100%"
+        flexGrow={0}
+        flexShrink={0}
+        bg=""
+      >
         <Image
           src="https://esquilo.io/png/thumb/wJZCNNoWGoPmnmE-Sad-Pepe-The-Frog-PNG-Transparent-Picture.png "
           w="70%"

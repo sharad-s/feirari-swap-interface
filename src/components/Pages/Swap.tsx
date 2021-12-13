@@ -1,5 +1,6 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Button } from "@chakra-ui/button";
+import { ArrowDownIcon } from "@chakra-ui/icons";
 import { Image } from "@chakra-ui/image";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import {
@@ -10,6 +11,7 @@ import {
   VStack,
   Box,
   Spacer,
+  Center,
 } from "@chakra-ui/layout";
 import { formatEther, formatUnits, parseEther } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
@@ -42,7 +44,10 @@ const Swap = () => {
 
   const tribeReceived = useMemo(() => {
     if (!rgtInput || !exchangeRate) return "0";
-    return formatUnits(parseEther(rgtInput).mul(exchangeRate), 18);
+    const rgt = parseEther(rgtInput);
+    const tribeExchanged = rgt.mul(exchangeRate);
+
+    return formatUnits(parseEther(rgtInput).mul(exchangeRate), 27);
   }, [rgtInput, exchangeRate]);
 
   const handleSwap = () => {
@@ -53,12 +58,18 @@ const Swap = () => {
   };
 
   return (
-    <Flex direction="row" w="100%" h="100%" flexGrow={1} color="white">
+    <Flex
+      direction={{ base: "column", md: "row" }}
+      w="100%"
+      h="100%"
+      flexGrow={1}
+      color="white"
+    >
       {/* Left side */}
       <VStack
         flexGrow={0}
         h="100%"
-        w="50%"
+        w={{ base: "100%", md: "50%" }}
         spacing="4"
         align="start"
         id="POOP"
@@ -79,7 +90,7 @@ const Swap = () => {
         >
           <Heading> Swap RGT for TRIBE </Heading>
 
-          <HStack w="100%" align="start" justify="start" my={4}>
+          <HStack w="100%" align="start" justify="start" my={1}>
             <VStack align="start" bg="" my={4} mb={8}>
               <Text>You have:</Text>
               <HStack>
@@ -91,7 +102,7 @@ const Swap = () => {
             </VStack>
           </HStack>
 
-          <VStack align="flex-start" w="100%" mb={4}>
+          <VStack align="flex-start" w="100%">
             <InputGroup w="100%">
               <Input
                 w="100%"
@@ -134,6 +145,10 @@ const Swap = () => {
             </InputGroup>
           </VStack>
 
+          <Center w="100%" my={3}>
+            <ArrowDownIcon />
+          </Center>
+
           <VStack align="flex-start" w="100%" mb={4}>
             <InputGroup w="100%" size="lg">
               <Input
@@ -164,9 +179,15 @@ const Swap = () => {
         </Flex>
       </VStack>
       {/* Right Side */}
-      <VStack w="50%" h="100%" flexGrow={0} flexShrink={0} bg="">
+      <VStack
+        w={{ base: "100%", md: "50%" }}
+        h="100%"
+        flexGrow={0}
+        flexShrink={0}
+        bg=""
+      >
         <Image
-          src="https://pfps.gg/assets/banners/7580-pepe-happy.png"
+          src="https://c.tenor.com/VmsI5xAblZ0AAAAM/pepe-pepocheer.gif"
           w="70%"
           h="70%"
           mx="auto"

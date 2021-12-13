@@ -33,9 +33,8 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
 
   const ENSName = useENSName(account);
 
-  console.log({ error });
-
   if (error) {
+    console.log({ error });
     return null;
   }
 
@@ -46,7 +45,7 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
   if (typeof account !== "string") {
     return (
       <div>
-        {isWeb3Available ? (
+        {!!isWeb3Available ? (
           <Button
             color="black"
             disabled={connecting}

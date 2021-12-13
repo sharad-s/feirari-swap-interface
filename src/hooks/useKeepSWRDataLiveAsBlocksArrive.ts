@@ -15,7 +15,6 @@ export default function useKeepSWRDataLiveAsBlocksArrive(
   const { data } = useBlockNumber();
 
   useEffect(() => {
-    console.log({ data });
     mutateRef.current();
   }, [data]);
 }
