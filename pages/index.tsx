@@ -7,6 +7,8 @@ import TokenBalance from "components/Connected/TokenBalance";
 import useEagerConnect from "hooks/useEagerConnect";
 import { Box } from "@chakra-ui/layout";
 
+import Swap from "components/Pages/Swap";
+
 const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
 
 function Home() {
@@ -17,13 +19,15 @@ function Home() {
   const isConnected = typeof account === "string" && !!library;
 
   return (
-    <div>
+    <>
       <Head>
         <title>FeiRari </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Box w="100%" h="100%" flexGrow={1}>
+      <Swap />
+
+      {/* <Box w="100%" h="100%" flexGrow={1}>
         <h1>
           Welcome to{" "}
           <a href="https://github.com/mirshko/next-web3-boilerplate">
@@ -38,21 +42,8 @@ function Home() {
             <TokenBalance tokenAddress={DAI_TOKEN_ADDRESS} symbol="DAI" />
           </section>
         )}
-      </Box>
-
-      <style jsx>{`
-        nav {
-          display: flex;
-          justify-content: space-between;
-        }
-
-        main {
-          text-align: center;
-          margin-left: auto;
-          margin-right: auto;
-        }
-      `}</style>
-    </div>
+      </Box> */}
+    </>
   );
 }
 

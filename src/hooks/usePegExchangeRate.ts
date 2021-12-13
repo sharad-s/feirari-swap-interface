@@ -3,21 +3,26 @@ import PEG_EXCHANGER_ABI from "../../contracts/PegExchanger.json";
 import useSWR from "swr";
 import useKeepSWRDataLiveAsBlocksArrive from "./useKeepSWRDataLiveAsBlocksArrive";
 import { PegExchanger } from "../../contracts/types";
-import { BigNumber } from "ethers";
+import { BigNumber, Contract } from "ethers";
 
-const PEG_EXCHANGER_ADDRESS = "";
+const PEG_EXCHANGER_ADDRESS = "0xf953b3A269d80e3eB0F2947630Da976B896A8C5b";
 
-const fetchPegExchangeRate = async (contract: PegExchanger) => {
-  return await contract.callStatic.exchangeRate();
+const fetchPegExchangeRate = async (contract: Contract) => {
+  const x = await contract.callStatic.exchangeRate();
+  alert("POOP");
+  console.log({ x });
+  return x;
 };
 
 export const usePegExchangeRate = () => {
-  const contract: PegExchanger = useContract(
+  const contract: Contract = useContract(
     PEG_EXCHANGER_ADDRESS,
     PEG_EXCHANGER_ABI
   );
 
-  const result = useSWR("exchangeRate", () => fetchPegExchangeRate(contract));
+  console.log({ contract });
+
+  const result = useSWR(["exchangeRate"], () => fetchPegExchangeRate(contract));
 
   useKeepSWRDataLiveAsBlocksArrive(result.mutate);
 

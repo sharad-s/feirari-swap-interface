@@ -1,7 +1,16 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Button } from "@chakra-ui/button";
-import { Input } from "@chakra-ui/input";
-import { Flex, Heading, Text, HStack, VStack } from "@chakra-ui/layout";
+import { Image } from "@chakra-ui/image";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
+import {
+  Flex,
+  Heading,
+  Text,
+  HStack,
+  VStack,
+  Box,
+  Spacer,
+} from "@chakra-ui/layout";
 import { formatEther, formatUnits, parseEther } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "ethers";
@@ -37,70 +46,135 @@ const Swap = () => {
   }, [rgtInput, exchangeRate]);
 
   const handleSwap = () => {
+    if (!rgtInput || isNaN(parseFloat(rgtInput))) return;
     alert(
-      `Swapping ${formatUnits(
-        parseEther(rgtInput)
-      )} for ${tribeReceived} TRIBE`
+      `Swapping ${formatUnits(parseEther(rgtInput))} for ${tribeReceived} TRIBE`
     );
   };
 
   return (
-    <Flex direction="column">
-      <Heading> Swap </Heading>
-      {/* <HStack>
-        <Avatar h="100%" boxSize="15px" src={rgt?.logoURL} />
-        <Text>RGT Balance: {formatEther(rgtBalance ?? BigNumber.from(0))}</Text>
-      </HStack>
-      <HStack>
-        <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
+    <Flex direction="row" w="100%" h="100%" flexGrow={1} color="white">
+      {/* Left side */}
+      <VStack
+        flexGrow={0}
+        h="100%"
+        w="50%"
+        spacing="4"
+        align="start"
+        id="POOP"
+        px={10}
+      >
+        {/* Box */}
+        <Flex
+          direction="column"
+          w="80%"
+          h="400px"
+          border="1px solid grey"
+          borderRadius="lg"
+          px={10}
+          py={10}
+          my="auto"
+          mx="auto"
+        >
+          <Heading> Swap RGT for TRIBE </Heading>
 
-        <Text>
-          TRIBE Balance: {formatEther(tribeBalance ?? BigNumber.from(0))}
-        </Text>
-      </HStack> */}
+          <VStack align="start" bg="" my={4} mb={8}>
+            <Text>You have:</Text>
+            <HStack>
+              <Avatar h="100%" boxSize="15px" src={rgt?.logoURL} />
+              <Text fontWeight="bold">
+                {formatEther(rgtBalance ?? BigNumber.from(0))} RGT
+              </Text>
+            </HStack>
+          </VStack>
 
-      <VStack align="flex-start">
-        <HStack align="center">
-          <Input
-            w="100%"
-            value={rgtInput}
-            onChange={({ target: { value } }) => {
-              setRgtInput(value);
-            }}
-            placeholder="RGT to swap"
-          />
-          <Button
-            onClick={() =>
-              setRgtInput(formatEther(rgtBalance ?? BigNumber.from(0)))
-            }
-          >
-            Max
-          </Button>
-        </HStack>
-        <HStack align="center">
-          <Avatar h="100%" boxSize="15px" src={rgt?.logoURL} />
-          <Text>
-            RGT Balance: {formatEther(rgtBalance ?? BigNumber.from(0))}
-          </Text>
-        </HStack>
-      </VStack>
+          <VStack align="flex-start" w="100%" mb={4}>
+            <InputGroup w="100%">
+              <Input
+                w="100%"
+                size="lg"
+                value={rgtInput}
+                onChange={({ target: { value } }) => {
+                  setRgtInput(value);
+                }}
+                fontWeight="bold"
+                placeholder="RGT to swap"
+                _placeholder={{
+                  fontWeight: "bold",
+                }}
+              />
+              <InputRightElement
+                children={
+                  <HStack>
+                    <HStack>
+                      <Avatar h="100%" boxSize="15px" src={rgt?.logoURL} />
+                      <Text>RGT</Text>
+                    </HStack>
 
-      <VStack align="flex-start">
-        <Input
-          w="100%"
-          value={tribeReceived}
-          placeholder="TRIBE recieved"
-          disabled
-        />
-        <HStack align="center">
+                    <Button
+                      onClick={() =>
+                        setRgtInput(
+                          formatEther(rgtBalance ?? BigNumber.from(0))
+                        )
+                      }
+                      background="black"
+                      color="white"
+                    >
+                      Max
+                    </Button>
+                  </HStack>
+                }
+              />
+            </InputGroup>
+          </VStack>
+
+          <VStack align="flex-start" w="100%" mb={4}>
+            <InputGroup w="100%" size="lg">
+              <Input
+                w="100%"
+                size="lg"
+                value={tribeReceived}
+                placeholder="TRIBE recieved"
+                disabled
+                _placeholder={{
+                  fontWeight: "bold",
+                }}
+                fontWeight="bold"
+              />
+              <InputRightElement
+                children={
+                  <HStack>
+                    <HStack>
+                      <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
+                      <Text>TRIBE</Text>
+                    </HStack>
+                  </HStack>
+                }
+              />
+            </InputGroup>
+            {/* <HStack align="center">
           <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
           <Text>
             TRIBE Balance: {formatEther(tribeBalance ?? BigNumber.from(0))}
           </Text>
-        </HStack>
-      </VStack>
+        </HStack> */}
+          </VStack>
 
-      <Button onClick={handleSwap}>Swap</Button>
+          <Button onClick={handleSwap} w="100%" colorScheme="green">
+            Swap
+          </Button>
+        </Flex>
+      </VStack>
+      {/* Right Side */}
+      <VStack w="50%" h="100%" flexGrow={0} flexShrink={0} bg="">
+        <Image
+          src="http://assets.stickpng.com/images/5845ca7c1046ab543d25238b.png"
+          w="70%"
+          h="70%"
+          mx="auto"
+          my="auto"
+        />
+      </VStack>
     </Flex>
   );
 };

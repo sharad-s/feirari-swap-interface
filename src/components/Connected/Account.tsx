@@ -5,6 +5,7 @@ import useENSName from "hooks/useENSName";
 import useMetaMaskOnboarding from "hooks/useMetaMaskOnboarding";
 import { formatEtherscanLink, shortenHex } from "../../util";
 import { injected } from "../../connectors";
+import { Button } from "@chakra-ui/button";
 
 type AccountProps = {
   triedToEagerConnect: boolean;
@@ -32,6 +33,8 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
 
   const ENSName = useENSName(account);
 
+  console.log({ error });
+
   if (error) {
     return null;
   }
@@ -44,7 +47,7 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
     return (
       <div>
         {isWeb3Available ? (
-          <button
+          <Button
             disabled={connecting}
             onClick={() => {
               setConnecting(true);
@@ -60,7 +63,7 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
             }}
           >
             {isMetaMaskInstalled ? "Connect to MetaMask" : "Connect to Wallet"}
-          </button>
+          </Button>
         ) : (
           <button onClick={startOnboarding}>Install Metamask</button>
         )}
