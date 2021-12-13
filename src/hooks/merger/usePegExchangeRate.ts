@@ -1,10 +1,10 @@
-import useContract from "./useContract";
-import PEG_EXCHANGER_ABI from "../../contracts/PegExchanger.json";
+import useContract from "../useContract";
+import PEG_EXCHANGER_ABI from "../../../contracts/PegExchanger.json";
 import useSWR from "swr";
-import useKeepSWRDataLiveAsBlocksArrive from "./useKeepSWRDataLiveAsBlocksArrive";
-import { PegExchanger } from "../../contracts/types";
+import useKeepSWRDataLiveAsBlocksArrive from "../useKeepSWRDataLiveAsBlocksArrive";
+import { PegExchanger } from "../../../contracts/types";
 import { BigNumber, constants, Contract } from "ethers";
-import { PEG_EXCHANGER_ADDRESS } from "../constants";
+import { PEG_EXCHANGER_ADDRESS } from "../../constants";
 import { useMemo } from "react";
 
 export const usePegExchangeRate = () => {

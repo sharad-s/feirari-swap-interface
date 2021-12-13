@@ -13,8 +13,9 @@ import {
 } from "@chakra-ui/layout";
 import { formatEther, formatUnits, parseEther } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
+import { TOKEN_ADDRESSES } from "../../constants";
 import { BigNumber } from "ethers";
-import { usePegExchangeRate } from "hooks/usePegExchangeRate";
+import { usePegExchangeRate } from "hooks/merger/usePegExchangeRate";
 import useTokenBalance from "hooks/useTokenBalance";
 import { useTokenData } from "hooks/useTokenData";
 import { useMemo, useState } from "react";
@@ -25,11 +26,11 @@ const Swap = () => {
 
   const { data: tribeBalance }: SWRResponse<BigNumber, Error> = useTokenBalance(
     account,
-    "0xc7283b66eb1eb5fb86327f08e1b5816b0720212b"
+    TOKEN_ADDRESSES.TRIBE
   );
 
-  const fei = useTokenData("0x956f47f50a910163d8bf957cf5846d573e7f87ca");
-  const tribe = useTokenData("0xc7283b66eb1eb5fb86327f08e1b5816b0720212b");
+  const fei = useTokenData(TOKEN_ADDRESSES.FEI);
+  const tribe = useTokenData(TOKEN_ADDRESSES.TRIBE);
 
   const [rgtInput, setRgtInput] = useState("");
 

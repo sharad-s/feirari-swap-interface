@@ -16,31 +16,32 @@ import {
 import { formatEther, formatUnits, parseEther } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "ethers";
-import { usePegExchangeRate } from "hooks/usePegExchangeRate";
 import useTokenBalance from "hooks/useTokenBalance";
 import { useTokenData } from "hooks/useTokenData";
 import { useMemo, useState } from "react";
 import { SWRResponse } from "swr";
 
+import { usePegExchangeRate } from "hooks/merger/usePegExchangeRate";
+import { usePegExchangeSwap } from "hooks/merger/usePegExchangeSwap";
+import { TOKEN_ADDRESSES } from "../../constants";
 const Swap = () => {
   const { account } = useWeb3React();
 
-  const { data: rgtBalance }: SWRResponse<BigNumber, Error> = useTokenBalance(
-    account,
-    "0xd291e7a03283640fdc51b121ac401383a46cc623"
-  );
+  const { data: rgtBalance, mutate }: SWRResponse<BigNumber, Error> =
+    useTokenBalance(account, TOKEN_ADDRESSES.RGT);
 
   const { data: tribeBalance }: SWRResponse<BigNumber, Error> = useTokenBalance(
     account,
-    "0xc7283b66eb1eb5fb86327f08e1b5816b0720212b"
+    TOKEN_ADDRESSES.TRIBE
   );
 
-  const rgt = useTokenData("0xd291e7a03283640fdc51b121ac401383a46cc623");
-  const tribe = useTokenData("0xc7283b66eb1eb5fb86327f08e1b5816b0720212b");
+  const rgt = useTokenData(TOKEN_ADDRESSES.RGT);
+  const tribe = useTokenData(TOKEN_ADDRESSES.TRIBE);
 
   const [rgtInput, setRgtInput] = useState("");
 
   const exchangeRate = usePegExchangeRate();
+  const { swap, swapStep } = usePegExchangeSwap();
 
   const tribeReceived = useMemo(() => {
     if (!rgtInput || !exchangeRate) return "0";
@@ -50,11 +51,15 @@ const Swap = () => {
     return formatUnits(parseEther(rgtInput).mul(exchangeRate), 27);
   }, [rgtInput, exchangeRate]);
 
-  const handleSwap = () => {
+  const handleSwap = async () => {
     if (!rgtInput || isNaN(parseFloat(rgtInput))) return;
-    alert(
-      `Swapping ${formatUnits(parseEther(rgtInput))} for ${tribeReceived} TRIBE`
-    );
+    // alert(
+    //   `Swapping ${formatUnits(
+    //     parseEther(rgtInput)
+    //   )} RGT for ${tribeReceived} TRIBE`
+    // );
+    await swap(parseEther(rgtInput));
+    mutate();
   };
 
   return (
@@ -173,8 +178,17 @@ const Swap = () => {
             </InputGroup>
           </VStack>
 
-          <Button onClick={handleSwap} w="100%" colorScheme="green">
-            Swap RGT for TRIBE
+          <Button
+            onClick={handleSwap}
+            w="100%"
+            colorScheme="green"
+            disabled={!!swapStep}
+          >
+            {swapStep === "APPROVING"
+              ? "Approving RGT..."
+              : swapStep === "SWAPPING"
+              ? "Exchanging RGT..."
+              : "Swap RGT for TRIBE"}
           </Button>
         </Flex>
       </VStack>
