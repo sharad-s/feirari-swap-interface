@@ -35,7 +35,7 @@ export const NewHeader = () => {
   const countdwon = useCountdown();
 
   useEffect(() => {
-    setTimeout(() => setShow(true), 2000);
+    setTimeout(() => setShow(true), 1000);
   }, []);
 
   return (

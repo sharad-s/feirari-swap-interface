@@ -45,8 +45,6 @@ const Swap = () => {
 
   const tribeReceived = useMemo(() => {
     if (!rgtInput || !exchangeRate) return "0";
-    const rgt = parseEther(rgtInput);
-    const tribeExchanged = rgt.mul(exchangeRate);
 
     return formatUnits(parseEther(rgtInput).mul(exchangeRate), 27);
   }, [rgtInput, exchangeRate]);
@@ -201,7 +199,7 @@ const Swap = () => {
         bg=""
       >
         <Image
-          src="https://c.tenor.com/VmsI5xAblZ0AAAAM/pepe-pepocheer.gif"
+          src="https://ih1.redbubble.net/image.981192734.2546/st,small,507x507-pad,600x600,f8f8f8.jpg"
           w="70%"
           h="70%"
           mx="auto"
