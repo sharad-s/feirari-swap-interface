@@ -33,7 +33,6 @@ export const NewHeader = () => {
   const [show, setShow] = useState(false);
 
   const countdwon = useCountdown();
-  console.log({ countdwon });
 
   useEffect(() => {
     setTimeout(() => setShow(true), 2000);
@@ -50,7 +49,6 @@ export const NewHeader = () => {
         overflowY="visible"
         width="100%"
         zIndex={3}
-        borderBottom="1px solid grey"
         color="white"
         // bg="pink"
       >
