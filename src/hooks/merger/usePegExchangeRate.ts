@@ -31,6 +31,5 @@ export const usePegExchangeRate = () => {
     return constants.WeiPerEther.div(BigNumber.from(10).pow(9));
   }, [data]);
 
-  console.log({ result });
   return result;
 };

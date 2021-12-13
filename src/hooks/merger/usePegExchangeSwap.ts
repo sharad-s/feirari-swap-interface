@@ -3,7 +3,7 @@ import PEG_EXCHANGER_ABI from "../../../contracts/PegExchanger.json";
 import ERC20_ABI from "../../../contracts/ERC20.json";
 import { ERC20, PegExchanger } from "../../../contracts/types";
 import { BigNumber, constants, Contract } from "ethers";
-import { PEG_EXCHANGER_ADDRESS } from "../../constants";
+import { PEG_EXCHANGER_ADDRESS, TOKEN_ADDRESSES } from "../../constants";
 import { useCallback, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 
@@ -15,10 +15,7 @@ export const usePegExchangeSwap = () => {
     PEG_EXCHANGER_ABI
   );
 
-  const rgtContract: ERC20 = useContract(
-    "0xd291e7a03283640fdc51b121ac401383a46cc623",
-    ERC20_ABI
-  );
+  const rgtContract: ERC20 = useContract(TOKEN_ADDRESSES.RGT, ERC20_ABI);
 
   const [swapStep, setSwapStep] = useState<
     "APPROVING" | "SWAPPING" | "LOADING" | undefined

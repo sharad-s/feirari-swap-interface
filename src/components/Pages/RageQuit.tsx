@@ -34,9 +34,18 @@ const Swap = () => {
   );
 
   const exchangeRate = useRageQuitExchangeRate();
-  const { maxRageQuittableAmount, canRageQuit, currentRageQuittableAmount } =
-    useRageQuitAmount();
-  console.log({ exchangeRate, maxRageQuittableAmount, canRageQuit });
+  const {
+    maxRageQuittableAmount,
+    canRageQuit,
+    currentRageQuittableAmount,
+    merkleProofArray,
+  } = useRageQuitAmount();
+  console.log({
+    exchangeRate,
+    maxRageQuittableAmount,
+    canRageQuit,
+    merkleProofArray,
+  });
 
   const fei = useTokenData(TOKEN_ADDRESSES.FEI);
   const tribe = useTokenData(TOKEN_ADDRESSES.TRIBE);
@@ -138,7 +147,9 @@ const Swap = () => {
                     <Button
                       onClick={() =>
                         setTribeInput(
-                          formatEther(tribeBalance ?? BigNumber.from(0))
+                          formatEther(
+                            maxRageQuittableAmount ?? BigNumber.from(0)
+                          )
                         )
                       }
                       background="black"
@@ -185,7 +196,7 @@ const Swap = () => {
             w="100%"
             colorScheme="green"
           >
-            Swap TRIBE for FEI
+            {!canRageQuit ? "You Cannot Ragequit." : "Swap TRIBE for FEI"}
           </Button>
         </Flex>
       </VStack>
