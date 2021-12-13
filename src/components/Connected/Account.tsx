@@ -48,6 +48,7 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
       <div>
         {isWeb3Available ? (
           <Button
+            color="black"
             disabled={connecting}
             onClick={() => {
               setConnecting(true);
