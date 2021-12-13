@@ -69,12 +69,13 @@ const Swap = () => {
           direction="column"
           w="80%"
           h="400px"
-          border="1px solid grey"
+          // border="1px solid grey"
           borderRadius="lg"
           px={10}
           py={5}
           my="auto"
           mx="auto"
+          bgGradient="linear-gradient(90deg, rgba(5,53,181,1) 0%, rgba(23,141,207,1) 100%)"
         >
           <Heading> Swap RGT for TRIBE </Heading>
 
@@ -165,7 +166,7 @@ const Swap = () => {
       {/* Right Side */}
       <VStack w="50%" h="100%" flexGrow={0} flexShrink={0} bg="">
         <Image
-          src="http://assets.stickpng.com/images/5845ca7c1046ab543d25238b.png"
+          src="https://pfps.gg/assets/banners/7580-pepe-happy.png"
           w="70%"
           h="70%"
           mx="auto"

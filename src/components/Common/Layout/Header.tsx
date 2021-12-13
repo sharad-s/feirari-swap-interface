@@ -3,6 +3,7 @@ import {
   Flex,
   Spacer,
   Avatar,
+  AvatarGroup,
   HStack,
   Text,
   Collapse,
@@ -20,6 +21,7 @@ import useEagerConnect from "hooks/useEagerConnect";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import useCountdown from "hooks/useCountdown";
 
 export const NewHeader = () => {
   const { account, library } = useWeb3React();
@@ -30,12 +32,15 @@ export const NewHeader = () => {
 
   const [show, setShow] = useState(false);
 
+  const countdwon = useCountdown();
+  console.log({ countdwon });
+
   useEffect(() => {
     setTimeout(() => setShow(true), 2000);
   }, []);
 
   return (
-    <VStack w="100%">
+    <VStack w="100%" zIndex={100}>
       <Flex
         px={4}
         height="50px"
@@ -51,11 +56,18 @@ export const NewHeader = () => {
       >
         <HStack>
           <AppLink href="/">
-            <Avatar
-              h="100%"
-              boxSize="30px"
-              src="https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xD291E7a03283640FDc51b121aC401383A46cC623/logo.png"
-            />
+            <AvatarGroup h="100%">
+              <Avatar
+                h="100%"
+                boxSize="30px"
+                src="https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x956F47F50A910163D8BF957Cf5846D573E7f87CA/logo.png"
+              />
+              <Avatar
+                h="100%"
+                boxSize="30px"
+                src="https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xD291E7a03283640FDc51b121aC401383A46cC623/logo.png"
+              />
+            </AvatarGroup>
           </AppLink>
 
           <Spacer />
@@ -89,7 +101,7 @@ export const NewHeader = () => {
           <Center h="100%" w="100%">
             <Text fontWeight="bold">
               {" "}
-              🎄 5D 12H 15M LEFT UNTIL RAGEQUIT HOLIDAY SALE ENDS! 🎄{" "}
+              🎄 {countdwon.join(" ")} LEFT UNTIL RAGEQUIT HOLIDAY SALE ENDS! 🎄{" "}
             </Text>
           </Center>
         </Box>

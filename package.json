@@ -25,8 +25,11 @@
     "@web3-react/injected-connector": "^6.0.7",
     "framer-motion": "^4",
     "next": "12.0.2",
+    "pathseg": "^1.2.1",
     "react": "17.0.2",
+    "react-countdown-hook": "^1.1.1",
     "react-dom": "17.0.2",
+    "react-tsparticles": "^1.37.5",
     "swr": "^1.0.1"
   },
   "devDependencies": {

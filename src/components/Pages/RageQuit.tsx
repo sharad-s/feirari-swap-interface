@@ -56,8 +56,8 @@ const Swap = () => {
           direction="column"
           w="80%"
           h="400px"
-          border="1px solid grey"
           borderRadius="lg"
+          bgGradient="linear-gradient(90deg, rgba(5,53,181,1) 0%, rgba(23,141,207,1) 100%)"
           px={10}
           py={10}
           my="auto"

@@ -1,5 +1,6 @@
 import { Flex } from "@chakra-ui/layout";
 import Header from "./Header";
+import Particles from "components/Common/Particles";
 
 const Layout = ({ children }) => {
   return (
@@ -22,9 +23,11 @@ const Layout = ({ children }) => {
         direction="column"
         justify="flex-start"
         align="flex-start"
+        zIndex={10}
       >
         {children}
       </Flex>
+      <Particles />
     </Flex>
   );
 };
