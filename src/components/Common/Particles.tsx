@@ -1,7 +1,7 @@
 import React from "react";
 import ParticlesTS from "react-tsparticles";
 
-const Particles = ({ children }) => {
+const Particles = () => {
   if (process.browser) {
     require("pathseg");
   }
@@ -143,9 +143,7 @@ const Particles = ({ children }) => {
           },
         },
       }}
-    >
-      {children}
-    </ParticlesTS>
+    />
   );
 };
 

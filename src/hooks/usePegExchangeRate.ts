@@ -8,7 +8,6 @@ import { PEG_EXCHANGER_ADDRESS } from "../constants";
 
 const fetchPegExchangeRate = async (contract: Contract) => {
   const x = await contract.callStatic.exchangeRate();
-  console.log({ x });
   return x;
 };
 
@@ -17,8 +16,6 @@ export const usePegExchangeRate = () => {
     PEG_EXCHANGER_ADDRESS,
     PEG_EXCHANGER_ABI
   );
-
-  console.log({ contract });
 
   const result = useSWR(["exchangeRate"], () => fetchPegExchangeRate(contract));
 
