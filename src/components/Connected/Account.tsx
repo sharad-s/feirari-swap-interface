@@ -3,7 +3,7 @@ import { UserRejectedRequestError } from "@web3-react/injected-connector";
 import { useEffect, useState } from "react";
 import useENSName from "hooks/useENSName";
 import useMetaMaskOnboarding from "hooks/useMetaMaskOnboarding";
-import { formatEtherscanLink, shortenHex } from "../../util";
+import { formatEtherscanLink, shortenHex } from "../../utils/util";
 import { injected } from "../../connectors";
 import { Button } from "@chakra-ui/button";
 

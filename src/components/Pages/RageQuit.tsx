@@ -15,11 +15,15 @@ import { formatEther, formatUnits, parseEther } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { TOKEN_ADDRESSES } from "../../constants";
 import { BigNumber } from "ethers";
-import { usePegExchangeRate } from "hooks/merger/usePegExchangeRate";
 import useTokenBalance from "hooks/useTokenBalance";
 import { useTokenData } from "hooks/useTokenData";
 import { useMemo, useState } from "react";
 import { SWRResponse } from "swr";
+
+import {
+  useRageQuitAmount,
+  useRageQuitExchangeRate,
+} from "hooks/merger/useRageQuit";
 
 const Swap = () => {
   const { account } = useWeb3React();
@@ -29,24 +33,24 @@ const Swap = () => {
     TOKEN_ADDRESSES.TRIBE
   );
 
+  const exchangeRate = useRageQuitExchangeRate();
+  const { maxRageQuittableAmount, canRageQuit } = useRageQuitAmount();
+  console.log({ exchangeRate, maxRageQuittableAmount, canRageQuit });
+
   const fei = useTokenData(TOKEN_ADDRESSES.FEI);
   const tribe = useTokenData(TOKEN_ADDRESSES.TRIBE);
 
-  const [rgtInput, setRgtInput] = useState("");
+  const [tribeInput, setTribeInput] = useState("");
 
-  const exchangeRate = usePegExchangeRate();
-  console.log({ exchangeRate });
+  const feiReceived = useMemo(() => {
+    if (!tribeInput || !exchangeRate) return "0";
 
-  const tribeReceived = useMemo(() => {
-    if (!rgtInput || !exchangeRate) return "0";
-    return formatUnits(parseEther(rgtInput).mul(exchangeRate), 18);
-  }, [rgtInput, exchangeRate]);
+    return formatUnits(parseEther(tribeInput).mul(exchangeRate), 27);
+  }, [tribeInput, exchangeRate]);
 
   const handleSwap = () => {
-    if (!rgtInput || isNaN(parseFloat(rgtInput))) return;
-    alert(
-      `Swapping ${formatUnits(parseEther(rgtInput))} for ${tribeReceived} TRIBE`
-    );
+    if (!tribeInput || isNaN(parseFloat(tribeInput))) return;
+    alert(`Swapping ${formatUnits(parseEther(tribeInput))} TRIBE`);
   };
 
   return (
@@ -86,7 +90,10 @@ const Swap = () => {
               <HStack>
                 <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
                 <Text fontWeight="bold">
-                  {formatEther(tribeBalance ?? BigNumber.from(0))} TRIBE
+                  {parseFloat(
+                    formatEther(tribeBalance ?? BigNumber.from(0))
+                  ).toFixed(4)}{" "}
+                  TRIBE
                 </Text>
               </HStack>
             </VStack>
@@ -96,7 +103,8 @@ const Swap = () => {
               <HStack>
                 <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
                 <Text fontWeight="bold">
-                  {formatEther(tribeBalance ?? BigNumber.from(0))} TRIBE
+                  {formatEther(maxRageQuittableAmount ?? BigNumber.from(0))}{" "}
+                  TRIBE
                 </Text>
               </HStack>
             </VStack>
@@ -108,9 +116,9 @@ const Swap = () => {
               <Input
                 w="100%"
                 size="lg"
-                value={rgtInput}
+                value={tribeInput}
                 onChange={({ target: { value } }) => {
-                  setRgtInput(value);
+                  setTribeInput(value);
                 }}
                 fontWeight="bold"
                 placeholder="TRIBE to swap"
@@ -123,12 +131,12 @@ const Swap = () => {
                   <HStack w="100%" mr={"150px"} justify="start" align="center">
                     <HStack>
                       <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
-                      <Text>RGT</Text>
+                      <Text>TRIBE</Text>
                     </HStack>
 
                     <Button
                       onClick={() =>
-                        setRgtInput(
+                        setTribeInput(
                           formatEther(tribeBalance ?? BigNumber.from(0))
                         )
                       }
@@ -151,7 +159,7 @@ const Swap = () => {
               <Input
                 w="100%"
                 size="lg"
-                value={tribeReceived}
+                value={feiReceived}
                 placeholder="FEI recieved"
                 disabled
                 _placeholder={{
@@ -170,7 +178,12 @@ const Swap = () => {
             </InputGroup>
           </VStack>
 
-          <Button onClick={handleSwap} w="100%" colorScheme="green">
+          <Button
+            onClick={handleSwap}
+            disabled={!canRageQuit}
+            w="100%"
+            colorScheme="green"
+          >
             Swap TRIBE for FEI
           </Button>
         </Flex>
