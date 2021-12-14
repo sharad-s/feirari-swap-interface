@@ -1,6 +1,7 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Button } from "@chakra-ui/button";
 import { Image } from "@chakra-ui/image";
+import { ArrowDownIcon } from "@chakra-ui/icons";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import {
   Flex,
@@ -10,6 +11,7 @@ import {
   VStack,
   Box,
   Spacer,
+  Center,
 } from "@chakra-ui/layout";
 import { formatEther, formatUnits, parseEther } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
@@ -65,37 +67,40 @@ const Swap = () => {
 
   return (
     <Flex
-      direction={{ base: "column", md: "row" }}
+      direction={{ base: "column", lg: "row" }}
       w="100%"
-      h="100%"
+      h={{base: "30%", lg: "100%"}}
       flexGrow={1}
+      mt={{base: "35px", lg: "0"} }
       color="white"
     >
       {/* Left side */}
       <VStack
         flexGrow={0}
         h="100%"
-        w={{ base: "100%", md: "50%" }}
+        w={{ base: "100%", lg: "50%" }}
         spacing="4"
         align="start"
         px={10}
+        px={{base: 5, sm: 5}}
+
       >
         {/* Box */}
         <Flex
           direction="column"
-          w="80%"
+          w={{base: "100%", sm: "80%"}}
           h="400px"
           borderRadius="lg"
           bgGradient="linear-gradient(90deg, rgba(5,53,181,1) 0%, rgba(23,141,207,1) 100%)"
-          px={10}
-          py={10}
+          px={{base: 5, sm: 10}}
+          py={5}
           my="auto"
           mx="auto"
         >
           <Heading> TRIBE-FEI (RageQuit) </Heading>
 
-          <HStack w="100%" align="start" justify="start" my={4}>
-            <VStack align="start" bg="">
+          <HStack w="100%" align="start" justify="start" my={1}>
+            <VStack align="start" bg="" my={4}>
               <Text>You have:</Text>
               <HStack>
                 <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
@@ -108,7 +113,7 @@ const Swap = () => {
               </HStack>
             </VStack>
             <Spacer />
-            <VStack align="start" bg="">
+            <VStack align="start" bg="" pt={4}>
               <Text>You can ragequit:</Text>
               <HStack>
                 <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
@@ -121,9 +126,11 @@ const Swap = () => {
             <Spacer />
           </HStack>
 
-          <VStack align="flex-start" w="100%" mb={4}>
-            <InputGroup w="100%">
+          <VStack align="flex-start" w="100%">
+            <InputGroup w="100%" size="lg">
               <Input
+                type="number"
+                inputMode="decimal"
                 w="100%"
                 size="lg"
                 value={tribeInput}
@@ -138,12 +145,7 @@ const Swap = () => {
               />
               <InputRightElement
                 children={
-                  <HStack w="100%" mr={"150px"} justify="start" align="center">
-                    <HStack>
-                      <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
-                      <Text>TRIBE</Text>
-                    </HStack>
-
+                  <HStack w="100%" mr={"30px"} justify="end" align="center">
                     <Button
                       onClick={() =>
                         setTribeInput(
@@ -152,19 +154,34 @@ const Swap = () => {
                           )
                         )
                       }
-                      background="black"
-                      color="white"
+                      background="transparent"
+                      color="#adadad"
+                      border="1px"
+                      borderColor="#adadad"
                       margin={0}
                       h="30%"
+                      _hover={{}}
+                      _active={{}}
+                      _focus={{boxShadow:""}}
                       p={1}
                     >
-                      Max
+                      <Text fontSize="sm"> Max </Text>
                     </Button>
+                    <HStack>
+                      <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
+                      <Text>TRIBE</Text>
+                    </HStack>
+
+
                   </HStack>
                 }
               />
             </InputGroup>
           </VStack>
+
+          <Center w="100%" my={3}>
+            <ArrowDownIcon />
+          </Center>
 
           <VStack align="flex-start" w="100%" mb={4}>
             <InputGroup w="100%" size="lg">
@@ -181,7 +198,7 @@ const Swap = () => {
               />
               <InputRightElement
                 children={
-                  <HStack w="100%" mr={"150px"} justify="start">
+                  <HStack w="100%" mr={"30px"} justify="end" align="center">
                     <Avatar h="100%" boxSize="15px" src={fei?.logoURL} />
                     <Text>FEI</Text>
                   </HStack>
@@ -202,15 +219,16 @@ const Swap = () => {
       </VStack>
       {/* Right Side */}
       <VStack
-        w={{ base: "100%", md: "50%" }}
-        h="100%"
+        w={{ base: "100%", lg: "50%" }}
+        h={{base: "60%", lg: "100%"}}
+        pb={{base: "150px", sm: "0px"}}
         flexGrow={0}
         flexShrink={0}
         bg=""
       >
         <Image
-          src="https://esquilo.io/png/thumb/wJZCNNoWGoPmnmE-Sad-Pepe-The-Frog-PNG-Transparent-Picture.png "
-          w="70%"
+          src="pablo.jpg"
+          w={{base: "90%" ,sm: "70%" }}
           h="70%"
           mx="auto"
           my="auto"

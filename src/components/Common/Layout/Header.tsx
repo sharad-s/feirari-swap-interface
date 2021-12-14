@@ -97,7 +97,7 @@ export const NewHeader = () => {
           // shadow="md"
         >
           <Center h="100%" w="100%">
-            <Text fontWeight="bold">
+            <Text fontWeight="bold" textAlign="center">
               {" "}
               🎄 {countdwon.join(" ")} LEFT UNTIL RAGEQUIT HOLIDAY SALE ENDS! 🎄{" "}
             </Text>

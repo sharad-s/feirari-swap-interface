@@ -5,7 +5,7 @@ import Particles from "components/Common/Particles";
 const Layout = ({ children }) => {
   return (
     <Flex
-      height="100vh"
+      height={{base:"140vh", lg:"100vh"}}
       w="100%"
       flex={1}
       direction="column"
