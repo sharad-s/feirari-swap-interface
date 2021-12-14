@@ -80,7 +80,7 @@ const Swap = () => {
         spacing="4"
         align="start"
         id="POOP"
-        px={{base: 5, sm: 5}}
+        px={5}
       >
         {/* Box */}
         <Flex

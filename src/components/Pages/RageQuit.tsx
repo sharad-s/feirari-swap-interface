@@ -81,8 +81,7 @@ const Swap = () => {
         w={{ base: "100%", lg: "50%" }}
         spacing="4"
         align="start"
-        px={10}
-        px={{base: 5, sm: 5}}
+        px={5}
 
       >
         {/* Box */}
