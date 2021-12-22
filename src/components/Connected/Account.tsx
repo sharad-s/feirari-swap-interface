@@ -6,6 +6,8 @@ import useMetaMaskOnboarding from "hooks/useMetaMaskOnboarding";
 import { formatEtherscanLink, shortenHex } from "../../utils/util";
 import { injected } from "../../connectors";
 import { Button } from "@chakra-ui/button";
+import { HStack, Text } from "@chakra-ui/layout";
+import { Image } from "@chakra-ui/image";
 
 type AccountProps = {
   triedToEagerConnect: boolean;
@@ -48,6 +50,7 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
         {!!isWeb3Available ? (
           <Button
             color="black"
+            p={3}
             disabled={connecting}
             onClick={() => {
               setConnecting(true);
@@ -62,7 +65,13 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
               });
             }}
           >
-            {isMetaMaskInstalled ? "Connect to MetaMask" : "Connect to Wallet"}
+            {isMetaMaskInstalled ? (
+              <HStack>
+                <Text>Connect to MetaMask</Text>
+              </HStack>
+            ) : (
+              "Connect to Wallet"
+            )}
           </Button>
         ) : (
           <button onClick={startOnboarding}>Install Metamask</button>

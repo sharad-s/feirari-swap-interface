@@ -1,12 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
-import Link from "next/link";
-import Account from "components/Connected/Account";
-import ETHBalance from "components/Connected/ETHBalance";
-import TokenBalance from "components/Connected/TokenBalance";
 import useEagerConnect from "hooks/useEagerConnect";
-import { Box } from "@chakra-ui/layout";
-
+import Main from "components/Pages/Main";
 import Swap from "components/Pages/Swap";
 
 const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
@@ -21,7 +16,7 @@ function Home() {
   return (
     <>
       <Head>
-        <title>FeiRari | Swap </title>
+        <title>FeiRari </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

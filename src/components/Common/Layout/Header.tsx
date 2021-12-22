@@ -10,6 +10,7 @@ import {
   VStack,
   Center,
   useDisclosure,
+  Image,
 } from "@chakra-ui/react";
 import { useWeb3React } from "@web3-react/core";
 
@@ -71,12 +72,18 @@ export const NewHeader = () => {
           <Spacer />
 
           <AppLink href="/swap">
-            <Text fontWeight="bold">Swap</Text>
+            <Text fontWeight="bold">🎅 {' '}Swap</Text>
           </AppLink>
           <Spacer />
 
           <AppLink href="/ngmi">
-            <Text fontWeight="bold">RageQuit</Text>
+            <Text fontWeight="bold">🤬 {' '}RageQuit</Text>
+          </AppLink>
+
+          <Spacer />
+
+          <AppLink href="https://www.google.com">
+            <Text fontWeight="bold">ℹ️ {" "} Info</Text>
           </AppLink>
         </HStack>
         <Spacer />
@@ -92,14 +99,24 @@ export const NewHeader = () => {
           w="100%"
           h="50px"
           color="white"
-          bg="#FF5058"
+          // bg="#2E6F43"
           // rounded="md"
           // shadow="md"
         >
+          <Image
+            w="100%"
+            h="50px"
+            src="https://cdn.discordapp.com/attachments/895862086343749722/923070154370334791/candy_cane_banner.png"
+            position="absolute"
+            zIndex={-1}
+          />
           <Center h="100%" w="100%">
-            <Text fontWeight="bold" textAlign="center">
+            <Text fontWeight="bold" textAlign="center" bg="#2E6F43" h="100%">
               {" "}
-              🎄 {countdwon.join(" ")} LEFT UNTIL RAGEQUIT HOLIDAY SALE ENDS! 🎄{" "}
+              <Center h="100%" w="100%">
+                 {countdwon.join(" ")} LEFT UNTIL RAGEQUIT HOLIDAY SALE ENDS!
+                🎄{" "}
+              </Center>
             </Text>
           </Center>
         </Box>

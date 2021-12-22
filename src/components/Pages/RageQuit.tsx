@@ -23,6 +23,7 @@ import { useMemo, useState } from "react";
 import { SWRResponse } from "swr";
 
 import {
+  useRageQuit,
   useRageQuitAmount,
   useRageQuitExchangeRate,
 } from "hooks/merger/useRageQuit";
@@ -36,16 +37,19 @@ const Swap = () => {
   );
 
   const exchangeRate = useRageQuitExchangeRate();
+
   const {
     maxRageQuittableAmount,
-    canRageQuit,
     currentRageQuittableAmount,
     merkleProofArray,
   } = useRageQuitAmount();
+
+  const { rageQuit, rageQuitStep } = useRageQuit();
+
   console.log({
     exchangeRate,
-    maxRageQuittableAmount,
-    canRageQuit,
+    maxRageQuittableAmount: maxRageQuittableAmount?.toString(),
+    currentRageQuittableAmount: currentRageQuittableAmount?.toString(),
     merkleProofArray,
   });
 
@@ -62,16 +66,39 @@ const Swap = () => {
 
   const handleSwap = () => {
     if (!tribeInput || isNaN(parseFloat(tribeInput))) return;
-    alert(`Swapping ${formatUnits(parseEther(tribeInput))} TRIBE`);
+    // alert(`Swapping ${formatUnits(parseEther(tribeInput))} TRIBE`);
+
+    rageQuit(parseEther(tribeInput)); // reeeee
   };
+
+  const error = useMemo(() => {
+    if (
+      !maxRageQuittableAmount ||
+      !currentRageQuittableAmount ||
+      !tribeBalance
+    ) {
+      return "Loading...";
+    }
+
+    if (maxRageQuittableAmount.isZero()) {
+      return "Ineligible for Ragequit";
+    }
+    if (maxRageQuittableAmount.gt(0) && currentRageQuittableAmount.isZero()) {
+      return "You have already Ragequit";
+    }
+    if (tribeBalance.isZero()) {
+      return "You have no TRIBE";
+    }
+    return undefined;
+  }, [maxRageQuittableAmount, currentRageQuittableAmount, tribeBalance]);
 
   return (
     <Flex
       direction={{ base: "column", lg: "row" }}
       w="100%"
-      h={{base: "30%", lg: "100%"}}
+      h={{ base: "30%", lg: "100%" }}
       flexGrow={1}
-      mt={{base: "35px", lg: "0"} }
+      mt={{ base: "35px", lg: "0" }}
       color="white"
     >
       {/* Left side */}
@@ -82,16 +109,15 @@ const Swap = () => {
         spacing="4"
         align="start"
         px={5}
-
       >
         {/* Box */}
         <Flex
           direction="column"
-          w={{base: "100%", sm: "80%"}}
+          w={{ base: "100%", sm: "80%" }}
           h="400px"
           borderRadius="lg"
-          bgGradient="linear-gradient(90deg, rgba(5,53,181,1) 0%, rgba(23,141,207,1) 100%)"
-          px={{base: 5, sm: 10}}
+          // bgGradient="linear-gradient(90deg, rgba(5,53,181,1) 0%, rgba(23,141,207,1) 100%)"
+          px={{ base: 5, sm: 10 }}
           py={5}
           my="auto"
           mx="auto"
@@ -117,7 +143,9 @@ const Swap = () => {
               <HStack>
                 <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
                 <Text fontWeight="bold">
-                  {formatEther(currentRageQuittableAmount ?? BigNumber.from(0))}{" "}
+                  {parseFloat(
+                    formatEther(currentRageQuittableAmount ?? BigNumber.from(0))
+                  ).toFixed(4)}{" "}
                   TRIBE
                 </Text>
               </HStack>
@@ -136,7 +164,10 @@ const Swap = () => {
                 onChange={({ target: { value } }) => {
                   setTribeInput(value);
                 }}
+                _form
                 fontWeight="bold"
+                bg="white"
+                color="black"
                 placeholder="TRIBE to swap"
                 _placeholder={{
                   fontWeight: "bold",
@@ -144,12 +175,20 @@ const Swap = () => {
               />
               <InputRightElement
                 children={
-                  <HStack w="100%" mr={"30px"} justify="end" align="center">
+                  <HStack
+                    w="100%"
+                    mr={"30px"}
+                    justify="end"
+                    align="center"
+                    color={tribe?.color}
+                  >
                     <Button
                       onClick={() =>
                         setTribeInput(
                           formatEther(
-                            maxRageQuittableAmount ?? BigNumber.from(0)
+                            (tribeBalance.lt(currentRageQuittableAmount)
+                              ? tribeBalance
+                              : currentRageQuittableAmount) ?? BigNumber.from(0)
                           )
                         )
                       }
@@ -161,7 +200,7 @@ const Swap = () => {
                       h="30%"
                       _hover={{}}
                       _active={{}}
-                      _focus={{boxShadow:""}}
+                      _focus={{ boxShadow: "" }}
                       p={1}
                     >
                       <Text fontSize="sm"> Max </Text>
@@ -170,8 +209,6 @@ const Swap = () => {
                       <Avatar h="100%" boxSize="15px" src={tribe?.logoURL} />
                       <Text>TRIBE</Text>
                     </HStack>
-
-
                   </HStack>
                 }
               />
@@ -179,7 +216,7 @@ const Swap = () => {
           </VStack>
 
           <Center w="100%" my={3}>
-            <ArrowDownIcon />
+            <ArrowDownIcon color="black" />
           </Center>
 
           <VStack align="flex-start" w="100%" mb={4}>
@@ -187,17 +224,28 @@ const Swap = () => {
               <Input
                 w="100%"
                 size="lg"
-                value={feiReceived}
+                value={parseFloat(feiReceived).toFixed(4)}
                 placeholder="FEI recieved"
                 disabled
+                bg="white"
+                color="black"
                 _placeholder={{
                   fontWeight: "bold",
+                }}
+                _disabled={{
+                  opacity: 0.7,
                 }}
                 fontWeight="bold"
               />
               <InputRightElement
                 children={
-                  <HStack w="100%" mr={"30px"} justify="end" align="center">
+                  <HStack
+                    w="100%"
+                    mr={"30px"}
+                    justify="end"
+                    align="center"
+                    color={fei?.color}
+                  >
                     <Avatar h="100%" boxSize="15px" src={fei?.logoURL} />
                     <Text>FEI</Text>
                   </HStack>
@@ -208,26 +256,42 @@ const Swap = () => {
 
           <Button
             onClick={handleSwap}
-            disabled={!canRageQuit}
+            disabled={!!error || !!rageQuitStep}
             w="100%"
             colorScheme="green"
+            _disabled={{
+              opacity: 0.7
+            }}
           >
-            {!canRageQuit ? "You Cannot Ragequit." : "Swap TRIBE for FEI"}
+            {!!error ? (
+              error
+            ) : rageQuitStep === "APPROVING" ? (
+              "Approving TRIBE..."
+            ) : rageQuitStep === "SWAPPING" ? (
+              <HStack h="100%">
+                <Image
+                  h="100%"
+                  src="https://media2.giphy.com/media/mk0ClXsaw7K2z2cgCF/giphy.gif"
+                />
+              </HStack>
+            ) : (
+              "Swap TRIBE for FEI"
+            )}
           </Button>
         </Flex>
       </VStack>
       {/* Right Side */}
       <VStack
         w={{ base: "100%", lg: "50%" }}
-        h={{base: "60%", lg: "100%"}}
-        pb={{base: "150px", sm: "0px"}}
+        h={{ base: "60%", lg: "100%" }}
+        pb={{ base: "150px", sm: "0px" }}
         flexGrow={0}
         flexShrink={0}
         bg=""
       >
         <Image
           src="pablo.jpg"
-          w={{base: "90%" ,sm: "70%" }}
+          w={{ base: "90%", sm: "70%" }}
           h="70%"
           mx="auto"
           my="auto"

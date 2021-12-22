@@ -5,7 +5,7 @@ import Particles from "components/Common/Particles";
 const Layout = ({ children }) => {
   return (
     <Flex
-      height={{base:"140vh", lg:"100vh"}}
+      height={{ base: "140vh", lg: "100vh" }}
       w="100%"
       flex={1}
       direction="column"
@@ -13,8 +13,8 @@ const Layout = ({ children }) => {
       align="flex-start"
       bg=""
       position="absolute"
-      bgGradient="linear-gradient(90deg, rgba(5,53,181,1) 0%, rgba(23,141,207,1) 100%)"
-    >
+      bgGradient="linear-gradient(124deg, rgba(172,13,13,1) 0%, rgba(255,176,141,1) 56%, rgba(242,186,186,1) 100%)"
+    > 
       <Header />
       <Flex
         height="100%"

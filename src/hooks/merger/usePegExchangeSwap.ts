@@ -6,14 +6,21 @@ import { BigNumber, constants, Contract } from "ethers";
 import { PEG_EXCHANGER_ADDRESS, TOKEN_ADDRESSES } from "../../constants";
 import { useCallback, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
+import { useToast } from "@chakra-ui/react";
+import { handleGenericError } from "utils/handleGenericError";
+import { formatEther, formatUnits } from "@ethersproject/units";
+import { usePegExchangeRate } from "./usePegExchangeRate";
 
 export const usePegExchangeSwap = () => {
   const { account } = useWeb3React();
+  const toast = useToast();
 
   const exchangeContract: PegExchanger = useContract(
     PEG_EXCHANGER_ADDRESS,
     PEG_EXCHANGER_ABI
   );
+
+  const exchangeRate = usePegExchangeRate()
 
   const rgtContract: ERC20 = useContract(TOKEN_ADDRESSES.RGT, ERC20_ABI);
 
@@ -32,13 +39,21 @@ export const usePegExchangeSwap = () => {
       )
         .then(() => {
           setSwapStep(undefined);
+          toast({
+            title: `Exchanged ${parseFloat(formatEther(amountBN)).toFixed(4)} RGT!`,
+            description: `For ${formatUnits(amountBN.mul(exchangeRate), 27)} TRIBE`,
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+            position: "bottom",
+          });
         })
         .catch((err) => {
-          console.log({ err });
+          handleGenericError(err, toast);
           setSwapStep(undefined);
         });
     },
-    [exchangeContract, rgtContract, account, setSwapStep]
+    [exchangeContract, exchangeRate, rgtContract, account, setSwapStep, toast]
   );
 
   return { swap: swapFn, swapStep };

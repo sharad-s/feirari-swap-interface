@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import useSWR from "swr";
-import { BigNumber, constants, Contract } from "ethers";
+import { BigNumber, constants, Contract, ethers } from "ethers";
 
 import useContract from "hooks/useContract";
 import useKeepSWRDataLiveAsBlocksArrive from "hooks/useKeepSWRDataLiveAsBlocksArrive";
@@ -15,6 +15,10 @@ import { useWeb3React } from "@web3-react/core";
 import RageQuitData from "utils/ragequit_data.json";
 import { createTree } from "utils/merkle";
 import { solidityKeccak256 } from "ethers/lib/utils";
+import { useToast } from "@chakra-ui/react";
+import { handleGenericError } from "utils/handleGenericError";
+import useBlockNumber from "hooks/useBlockNumber";
+import useBlockTimestamp from "hooks/useBlockTimestamp";
 
 // Exchange rate
 export const useRageQuitExchangeRate = () => {
@@ -63,18 +67,21 @@ export const useRageQuitAmount = () => {
     }
   }, [account]);
 
-  const canRageQuit: boolean = useMemo(
-    () => !maxRageQuittableAmount.isZero(),
-    [maxRageQuittableAmount]
-  );
-
-  const { data: currentRageQuittableAmount, mutate } = useSWR(
+  const {
+    data: currentRageQuittableAmount,
+    mutate,
+    error,
+  } = useSWR(
     "currentRageQuittableAmount for " +
       account +
       " with maxRageQuit " +
       maxRageQuittableAmount.toString(),
     async () => {
       const claimedAmount = await rageQuitContract.callStatic.claimed(account);
+      console.log(
+        { claimedAmount: claimedAmount.toString() },
+        maxRageQuittableAmount.sub(claimedAmount).toString()
+      );
       return maxRageQuittableAmount.sub(claimedAmount);
     }
   );
@@ -99,18 +106,28 @@ export const useRageQuitAmount = () => {
     return proofArray;
   }, [account]);
 
+  const canRageQuit: boolean = useMemo(
+    () => !maxRageQuittableAmount.isZero(),
+    [maxRageQuittableAmount]
+  );
+
   useKeepSWRDataLiveAsBlocksArrive(mutate);
 
-  return {
+  const obj = {
     maxRageQuittableAmount,
-    canRageQuit,
     currentRageQuittableAmount,
     merkleProofArray,
+    canRageQuit
   };
+
+  return obj;
 };
 
 export const useRageQuit = () => {
   const { account } = useWeb3React();
+  const toast = useToast();
+
+  const { data: block } = useBlockTimestamp();
 
   const rageQuitContract: RageQuit = useContract(
     RAGEQUIT_ADDRESS,
@@ -122,7 +139,7 @@ export const useRageQuit = () => {
   const { maxRageQuittableAmount, merkleProofArray, canRageQuit } =
     useRageQuitAmount();
 
-  const [swapStep, setSwapStep] = useState<
+  const [step, setStep] = useState<
     "APPROVING" | "SWAPPING" | "LOADING" | undefined
   >();
 
@@ -136,21 +153,21 @@ export const useRageQuit = () => {
           maxRageQuittableAmount,
           merkleProofArray,
           account,
-          setSwapStep
+          setStep
         )
           .then(() => {
-            setSwapStep(undefined);
+            setStep(undefined);
           })
           .catch((err) => {
-            console.log({ err });
-            setSwapStep(undefined);
+            handleGenericError(err, toast);
+            setStep(undefined);
           });
       }
     },
-    [rageQuitContract, tribeContract, account, canRageQuit, setSwapStep]
+    [rageQuitContract, tribeContract, account, canRageQuit, setStep, toast]
   );
 
-  return { swap: swapFn, swapStep };
+  return { rageQuit: swapFn, rageQuitStep: step };
 };
 
 // Checks allowance and exchanges RGT for Fei
@@ -164,6 +181,8 @@ export const swapTRIBEForFei = async (
   setStep: (x: "APPROVING" | "SWAPPING" | "LOADING" | undefined) => void
 ) => {
   setStep("LOADING");
+
+  console.log(":LOADING")
 
   // Token
   const allowance = await tribeContract.callStatic.allowance(
