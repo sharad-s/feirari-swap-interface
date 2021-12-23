@@ -10,16 +10,17 @@ const Layout = ({ children }) => {
   const toast = useToast()
 
   useEffect(() => {
-    if (chainId !== 1) {
-      toast({
-        title: "Unsupported network!",
-        description: "Please switch to Mainnet.",
-        status: "warning",
-        position: "bottom",
-        duration: 300000,
-        isClosable: true,
-      });
-    }
+    console.log({chainId})
+    // if (chainId !== 1) {
+    //   toast({
+    //     title: "Unsupported network!",
+    //     description: "Please switch to Mainnet.",
+    //     status: "warning",
+    //     position: "bottom",
+    //     duration: 300000,
+    //     isClosable: true,
+    //   });
+    // }
   }, [chainId]);
 
   return (
