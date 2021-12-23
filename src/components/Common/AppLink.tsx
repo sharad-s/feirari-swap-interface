@@ -14,8 +14,8 @@ const AppLink: any = ({
   linkProps: any;
 }) => {
   return (
-    <NextLink href={href} passHref>
-      <Link as={as} {...linkProps}>
+    <NextLink href={href} passHref >
+      <Link as={as} {...linkProps} isExternal>
         {children}
       </Link>
     </NextLink>
