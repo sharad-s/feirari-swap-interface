@@ -60,6 +60,7 @@ export const useRageQuitAmount = () => {
 
   const maxRageQuittableAmount: BigNumber = useMemo(() => {
     const maxAmount = RageQuitData[account];
+    console.log("maxRageQuittableAmount", { account, maxAmount });
     if (!maxAmount) {
       return BigNumber.from(0);
     } else {
@@ -117,7 +118,7 @@ export const useRageQuitAmount = () => {
     maxRageQuittableAmount,
     currentRageQuittableAmount,
     merkleProofArray,
-    canRageQuit
+    canRageQuit,
   };
 
   return obj;
@@ -182,7 +183,7 @@ export const swapTRIBEForFei = async (
 ) => {
   setStep("LOADING");
 
-  console.log(":LOADING")
+  console.log(":LOADING");
 
   // Token
   const allowance = await tribeContract.callStatic.allowance(
