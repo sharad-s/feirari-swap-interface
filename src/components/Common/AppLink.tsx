@@ -15,7 +15,7 @@ const AppLink: any = ({
 }) => {
   return (
     <NextLink href={href} passHref >
-      <Link as={as} {...linkProps} isExternal>
+      <Link as={as} {...linkProps}>
         {children}
       </Link>
     </NextLink>
