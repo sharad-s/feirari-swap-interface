@@ -59,8 +59,9 @@ export const useRageQuitAmount = () => {
   );
 
   const maxRageQuittableAmount: BigNumber = useMemo(() => {
-    const maxAmount = RageQuitData[account.toLowerCase()];
-    console.log("maxRageQuittableAmount", { account, maxAmount });
+    let _account = account?.toLowerCase() ?? ""
+    const maxAmount = RageQuitData[_account];
+    console.log("maxRageQuittableAmount", { account, _account, maxAmount });
     if (!maxAmount) {
       return BigNumber.from(0);
     } else {
@@ -88,8 +89,9 @@ export const useRageQuitAmount = () => {
   );
 
   const merkleProofArray = useMemo(() => {
-    let maxAmount = RageQuitData[account.toLowerCase()];
-    console.log("merkleProofArray", { account, maxAmount });
+    let _account = account?.toLowerCase() ?? ""
+    let maxAmount = RageQuitData[_account];
+    console.log("merkleProofArray", { _account, account, maxAmount });
     if (!maxAmount) return undefined;
 
     const tree = createTree();
