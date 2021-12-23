@@ -29,7 +29,7 @@ export const usePegExchangeRate = () => {
     if (data) {
       return exchangeRate;
     }
-    return constants.WeiPerEther.div(BigNumber.from(10).pow(9));
+    return BigNumber.from(2670567).mul(constants.WeiPerEther).div(BigNumber.from(10).pow(14));
   }, [data]);
 
   console.log("rate", formatUnits(result, 9));
