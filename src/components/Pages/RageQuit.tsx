@@ -122,7 +122,11 @@ const Swap = () => {
           my="auto"
           mx="auto"
         >
-          <Heading> TRIBE-FEI (RageQuit) </Heading>
+          <Heading> RageQuit</Heading>
+          <Heading size="sm" mt={2}>
+            {" "}
+            Swap TRIBE for FEI
+          </Heading>
 
           <HStack w="100%" align="start" justify="start" my={1}>
             <VStack align="start" bg="" my={4}>
@@ -260,7 +264,7 @@ const Swap = () => {
             w="100%"
             colorScheme="green"
             _disabled={{
-              opacity: 0.7
+              opacity: 0.7,
             }}
           >
             {!!error ? (
@@ -292,7 +296,7 @@ const Swap = () => {
         <Image
           src="pablo.jpg"
           w={{ base: "90%", sm: "70%" }}
-          h="70%"
+          h="auto"
           mx="auto"
           my="auto"
           alt="Sad Pepe"

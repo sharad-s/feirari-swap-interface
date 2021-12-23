@@ -122,14 +122,57 @@ const Swap = () => {
           py={5}
           my="auto"
           mx="auto"
-        //   bgGradient="grey"
-        //   bg="grey"
+          //   bgGradient="grey"
+          //   bg="grey"
         >
-          <Heading> Swap RGT for TRIBE </Heading>
-          
+          <Heading>Join the Tribe</Heading>
+          The rari dao is merging with the tribe
+          <Spacer />
+          <Heading size="md">How was the new DAO created?</Heading>
+          <Text>
+            Governance for all Rari products will remain identical, simply
+            substituting the RGT token out for TRIBE and using TRIBE
+            quorum/proposal threshold of 25M and 2.5M, respectively. We will
+            deploy a new OZ Governor Bravo that is powered by TRIBE to govern
+            the existing Rari timelock. There will be 2 Timelocks and governance
+            tabs on Tally, both powered by TRIBE.
+          </Text>
+          <Spacer />
+          <Heading size="md">If I own RGT, what do I do?</Heading>
+          <Text>
+            If you are an RGT holder, you can swap to TRIBE at an exchange rate
+            of $26.70 RGT/TRIBE. Use the swap interface to exchange RGT for
+            Tribe and make sure to delegate your Tribe to participate in
+            governance.
+          </Text>
+          <Spacer />
+          <Heading size="md">
+            How soon do I need to exchange RGT to Tribe?
+          </Heading>
+          <Text>
+            There is no set expiration for this swap period to end, but it is
+            recommended to swap early so you can participate in governance and
+            the future of the Tribe DAO. Any changes to the swap period will be
+            well announced and communicated to RGT holders.
+          </Text>
+          <Spacer />
+          <Heading size="md">What is RageQuit?</Heading>
+          <Text>
+            The RageQuit allows TRIBE holders from block 13623378 to be able to
+            sell their TRIBE for newly minted FEI at the “Intrinsic Value”.
+            Intrinsic Value is calculated as Protocol equity / circulating
+            TRIBE. Protocol equity is PCV - user FEI, and circulating TRIBE is
+            total supply - treasury - liquidity mining TRIBE. These holders can
+            only exchange TRIBE up to the amount held at block 13623378. To
+            check availability, look in the json map here:
+            fei-protocol-core/ragequit_data.json at feat/merger ·
+            fei-protocol/fei-protocol-core · GitHub 36. Note that users can
+            ragequit partial amounts, and rage quit multiple times up to a
+            cumulative value of the amount held at block 13623378.
+          </Text>
+          <Spacer />
         </Flex>
       </VStack>
-     
     </Flex>
   );
 };

@@ -21,6 +21,7 @@ function Home() {
       </Head>
 
       <Swap />
+      {/* <Main /> */}
 
       {/* <Box w="100%" h="100%" flexGrow={1}>
         <h1>

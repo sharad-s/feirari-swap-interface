@@ -14,6 +14,7 @@ const Layout = ({ children }) => {
       bg=""
       position="absolute"
       bgGradient="linear-gradient(124deg, rgba(172,13,13,1) 0%, rgba(255,176,141,1) 56%, rgba(242,186,186,1) 100%)"
+
     > 
       <Header />
       <Flex

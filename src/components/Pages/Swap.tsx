@@ -276,9 +276,9 @@ const Swap = () => {
         bg=""
       >
         <Image
-          src="https://ih1.redbubble.net/image.981192734.2546/st,small,507x507-pad,600x600,f8f8f8.jpg"
+          src="/static/peepo_gifty.png"
           w={{ base: "90%", sm: "70%" }}
-          h="70%"
+          h="auto"
           mx="auto"
           my="auto"
           alt="Happy Pepe"

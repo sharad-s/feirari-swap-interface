@@ -11,6 +11,7 @@ import {
   Center,
   useDisclosure,
   Image,
+  chakra,
 } from "@chakra-ui/react";
 import { useWeb3React } from "@web3-react/core";
 
@@ -70,21 +71,24 @@ export const NewHeader = () => {
           </AppLink>
 
           <Spacer />
+          <AppLink href="https://docs.google.com/document/d/1ZUAeS36lTwJjr0xRbtVamTYOWT2yew2mw6L9CcVO1mU/edit?usp=sharing">
+            <Text fontWeight="bold">ℹ️ Info</Text>
+          </AppLink>
+
+          <Spacer />
 
           <AppLink href="/swap">
-            <Text fontWeight="bold">🎅 {' '}Swap</Text>
+            <Text fontWeight="bold">🎅 Swap</Text>
           </AppLink>
           <Spacer />
 
           <AppLink href="/ngmi">
-            <Text fontWeight="bold">🤬 {' '}RageQuit</Text>
+            <Text fontWeight="bold">
+              😡 RageQuit <chakra.span fontSize="xs">({countdwon.join(":")})</chakra.span>
+            </Text>
           </AppLink>
 
           <Spacer />
-
-          <AppLink href="https://www.google.com">
-            <Text fontWeight="bold">ℹ️ {" "} Info</Text>
-          </AppLink>
         </HStack>
         <Spacer />
         <Account triedToEagerConnect={triedToEagerConnect} />
@@ -114,8 +118,8 @@ export const NewHeader = () => {
             <Text fontWeight="bold" textAlign="center" bg="#2E6F43" h="100%">
               {" "}
               <Center h="100%" w="100%">
-                 {countdwon.join(" ")} LEFT UNTIL RAGEQUIT HOLIDAY SALE ENDS!
-                🎄{" "}
+                {/* {countdwon.join(" ")} LEFT UNTIL HOLIDAY TRIBE SALE ENDS! */}
+                🎄 HOLIDAY SALE ON TRIBE ACTIVE NOW!🎄{" "}
               </Center>
             </Text>
           </Center>
