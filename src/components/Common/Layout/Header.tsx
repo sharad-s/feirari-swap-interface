@@ -71,7 +71,7 @@ export const NewHeader = () => {
           </AppLink>
 
           <Spacer />
-          <AppLink href="https://docs.google.com/document/d/1ZUAeS36lTwJjr0xRbtVamTYOWT2yew2mw6L9CcVO1mU/edit?usp=sharing">
+          <AppLink href="https://docs.google.com/document/d/1ZUAeS36lTwJjr0xRbtVamTYOWT2yew2mw6L9CcVO1mU/edit?usp=sharing" isExternal={true}>
             <Text fontWeight="bold">ℹ️ Info</Text>
           </AppLink>
 

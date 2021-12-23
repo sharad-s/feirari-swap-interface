@@ -6,16 +6,18 @@ const AppLink: any = ({
   children,
   href,
   as,
+  isExternal = false,
   ...linkProps
 }: {
   children: ReactNode[];
   href: string;
   as: any;
+  isExternal: boolean;
   linkProps: any;
 }) => {
   return (
-    <NextLink href={href} passHref >
-      <Link as={as} {...linkProps}>
+    <NextLink href={href} passHref>
+      <Link as={as} {...linkProps} isExternal={isExternal}>
         {children}
       </Link>
     </NextLink>
